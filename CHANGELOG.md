@@ -2,6 +2,12 @@
 
 Framer Motion adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.2.2] 2021-11-08
+
+### Added
+
+-   `useInstantTransition` hook for internal use.
+
 ## [5.2.1] 2021-11-05
 
 ### Fixed
