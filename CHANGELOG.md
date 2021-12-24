@@ -2,7 +2,111 @@
 
 Framer Motion adheres to [Semantic Versioning](http://semver.org/).
 
-## [5.3.0] Unreleased
+## [5.5.5] 2021-12-17
+
+### Fixed
+
+-   Using `dpr` prop in layout animation calculations.
+
+## [5.5.4] 2021-12-16
+
+### Fixed
+
+-   Improving performance of `LayoutCamera`.
+-   Removing `data-projection-id` in static mode.
+
+## [5.5.3] 2021-12-15
+
+### Fixed
+
+-   Improving performance of `LayoutCamera` and fixing final flash.
+
+## [5.5.2] 2021-12-15
+
+### Fixed
+
+-   Reimplemented dynamic resolution scaling for `LayoutCamera`.
+
+## [5.5.1] 2021-12-14
+
+### Fixed
+
+-   Removed dynamic resolution scaling from `LayoutCamera` to fix crash in iOS.
+
+## [5.5.0] 2021-12-14
+
+### Added
+
+-   `LayoutCamera` and `LayoutOrthographicCamera`.
+
+## [5.4.5] 2021-12-09
+
+### Fixed
+
+-   Passing `MotionConfigContext` through from DOM into 3D.
+
+## [5.4.4] 2021-12-08
+
+### Fixed
+
+-   Fixing variant animations across DOM and 3D boundaries via `MotionCanvas`.
+
+## [5.4.3] 2021-12-07
+
+### Fixed
+
+-   Fixing export paths. [PR by @edoardolincetto](https://github.com/framer/motion/pull/1385).
+
+## [5.4.2] 2021-12-07
+
+### Fixed
+
+-   Sharing `MotionContext` across Framer Motion and Framer Motion 3D environments in CommonJS environments.
+
+## [5.4.1] 2021-12-06
+
+### Fixed
+
+-   3D entry point overwriting ES modules with dropped exports.
+
+## [5.4.0] 2021-12-06
+
+### Added
+
+-   `useAnimationFrame`
+
+## [5.3.3] 2021-11-24
+
+### Fixed
+
+-   Fixing animating to CSS variables with `SVGElement`. [Issue](https://github.com/framer/motion/issues/1334)
+-   Unsetting `z-index` for resting `Reorder.Item` components. [Issue](https://github.com/framer/motion/issues/1313)
+-   Forward native drag listeners to `draggable` elements. [Issue](https://github.com/framer/motion/issues/1248)
+-   Authors can now support browsers without `Proxy` by using `motion("div")` syntax. [Issue](https://github.com/framer/motion/issues/1178)
+
+## [5.3.2] 2021-11-23
+
+### Fixed
+
+-   Ensuring forced renders are batched so sibling `AnimatePresence` renders are triggered together. [Issue](https://github.com/framer/motion/issues/1358)
+-   Viewport enter/leave event handlers are passed `IntersectionObserverEntry` or `null` if `IntersectionObserver` is not supported on the device. [Issue](https://github.com/framer/motion/issues/1364)
+-   No longer applying touch scroll-disabling styles if `dragListener` is set to `false`. [Issue](https://github.com/framer/motion/issues/1341)
+
+## [5.3.1] 2021-11-19
+
+### Added
+
+-   `useInstantTransition` hook for internal use.
+
+### Fixed
+
+-   Removing `layoutDependency` from forwarded props. [Issue](https://github.com/framer/motion/issues/1350)
+-   `Reorder.Item` correctly fires `onDrag`. [Issue](https://github.com/framer/motion/issues/1348)
+-   Fires `onPressStart` and `onHoverStart` **after** triggering animations.
+-   Replay keyframes when variant changes. [Issue](https://github.com/framer/motion/issues/1346)
+-   Correctly SSR final keyframe when `initial` is `false`.
+
+## [5.3.0] 2021-11-11
 
 ### Added
 

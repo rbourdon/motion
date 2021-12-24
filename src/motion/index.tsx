@@ -53,6 +53,7 @@ export function createMotionComponent<Props extends {}, Instance, RenderState>({
     ) {
         const layoutId = useLayoutId(props)
         props = { ...props, layoutId }
+
         /**
          * If we're rendering in a static environment, we only visually update the component
          * as a result of a React-rerender rather than interactions or animations. This
@@ -76,7 +77,7 @@ export function createMotionComponent<Props extends {}, Instance, RenderState>({
          * shared element transitions however. Perhaps for those we could revert to a root node
          * that gets forceRendered and layout animations are triggered on its layout effect.
          */
-        const projectionId = useProjectionId()
+        const projectionId = config.isStatic ? undefined : useProjectionId()
 
         /**
          *
@@ -137,7 +138,8 @@ export function createMotionComponent<Props extends {}, Instance, RenderState>({
                             externalRef
                         ),
                         visualState,
-                        config.isStatic
+                        config.isStatic,
+                        context.visualElement
                     )}
                 </MotionContext.Provider>
             </VisualElementHandler>

@@ -24,6 +24,7 @@ export type LayoutEvents =
     | "willUpdate"
     | "didUpdate"
     | "measure"
+    | "projectionUpdate"
     | "animationComplete"
 
 export interface IProjectionNode<I = unknown> {
@@ -113,7 +114,7 @@ export interface IProjectionNode<I = unknown> {
     resumingFrom?: IProjectionNode
     isPresent?: boolean
 
-    addEventListener(name: LayoutEvents, handler: VoidFunction): VoidFunction
+    addEventListener(name: LayoutEvents, handler: any): VoidFunction
     notifyListeners(name: LayoutEvents, ...args: any): void
     hasListeners(name: LayoutEvents): boolean
 

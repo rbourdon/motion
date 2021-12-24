@@ -1,9 +1,16 @@
 import { render } from "../../../../jest.setup"
 import * as React from "react"
 import { act } from "react-dom/test-utils"
-import { AnimatePresence, motion, MotionConfig, useAnimation } from "../../.."
+import {
+    AnimatePresence,
+    motion,
+    MotionConfig,
+    LayoutGroup,
+    useAnimation,
+} from "../../.."
 import { motionValue } from "../../../value"
 import { ResolvedValues } from "../../../render/types"
+import sync from "framesync"
 
 describe("AnimatePresence", () => {
     test("Allows initial animation if no `initial` prop defined", async () => {
@@ -135,7 +142,7 @@ describe("AnimatePresence", () => {
     })
 
     test("when: afterChildren fires correctly", async () => {
-        const promise = new Promise<number>((resolve) => {
+        const child = await new Promise<number>((resolve) => {
             const parentOpacityOutput: ResolvedValues[] = []
 
             const variants = {
@@ -177,7 +184,6 @@ describe("AnimatePresence", () => {
             rerender(<Component isVisible={false} />)
         })
 
-        const child = await promise
         expect(child).toBeGreaterThan(1)
     })
 
@@ -810,5 +816,54 @@ describe("AnimatePresence with custom components", () => {
         })
 
         expect(opacity.get()).toBe(0)
+    })
+
+    test("Sibling AnimatePresence wrapped in LayoutGroup remove exiting elements", async () => {
+        const opacity = motionValue(1)
+
+        const Component = ({ isVisible }: { isVisible: boolean }) => {
+            return (
+                <LayoutGroup>
+                    <AnimatePresence>
+                        {isVisible && (
+                            <motion.div
+                                data-testid="a"
+                                exit={{ opacity: 0 }}
+                                transition={{ type: false }}
+                                style={{ opacity }}
+                            />
+                        )}
+                    </AnimatePresence>
+                    <AnimatePresence>
+                        {isVisible && (
+                            <motion.div
+                                data-testid="b"
+                                exit={{ opacity: 0 }}
+                                transition={{ type: false }}
+                                style={{ opacity }}
+                            />
+                        )}
+                    </AnimatePresence>
+                </LayoutGroup>
+            )
+        }
+
+        const { rerender, queryByTestId } = render(<Component isVisible />)
+
+        rerender(<Component isVisible />)
+
+        await act(async () => {
+            rerender(<Component isVisible={false} />)
+        })
+
+        await act(async () => {
+            await new Promise<void>((resolve) => {
+                sync.postRender(() => {
+                    expect(queryByTestId("a")).toBe(null)
+                    expect(queryByTestId("b")).toBe(null)
+                    resolve()
+                })
+            })
+        })
     })
 })

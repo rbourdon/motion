@@ -69,8 +69,10 @@ const umdProd = Object.assign({}, umd, {
 })
 
 const cjs = Object.assign({}, config, {
+    input: ["lib/index.js", "lib/three-entry.js"],
     output: {
-        file: `dist/${pkg.name}.cjs.js`,
+        entryFileNames: `[name].js`,
+        dir: "dist/cjs",
         format: "cjs",
         exports: "named",
     },
@@ -79,6 +81,7 @@ const cjs = Object.assign({}, config, {
 })
 
 const es = Object.assign({}, config, {
+    input: ["lib/index.js", "lib/three-entry.js"],
     output: {
         entryFileNames: "[name].mjs",
         format: "es",
